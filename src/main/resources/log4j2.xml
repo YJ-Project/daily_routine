@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="info" monitorInterval="30">
+    <Properties>
+        <Property name="LOG_FORMAT">%d{yyyy-MM-dd HH:mm:ss} %p %m%n</Property>
+        <Property name="BASE_DIR">D:\sts-workspace\logs</Property>
+    </Properties>
+
+    <Appenders>
+        <Console name="Console" target="SYSTEM_OUT" follow="true">
+            <PatternLayout pattern="${LOG_FORMAT}"/>
+        </Console>
+        <RollingFile name="File"
+                     fileName="${BASE_DIR}/daily.log"
+                     filePattern="${BASE_DIR}/bootdemo.%d{yyyyMMdd}.log">
+            <PatternLayout pattern="${LOG_FORMAT}"/>
+            <Policies>
+                <TimeBasedTriggeringPolicy />
+            </Policies>
+            <DefaultRolloverStrategy>
+                <Delete basePath="${BASE_DIR}">
+                    <IfFileName glob="*.log" />
+                    <IfLastModified age="30d" />
+                </Delete>
+            </DefaultRolloverStrategy>
+        </RollingFile>
+    </Appenders>
+
+    <Loggers>
+      <logger name="jdbc" level="OFF"/>
+	  <logger name="jdbc.sqlonly" level="OFF"/>
+	  <logger name="jdbc.sqltiming" level="DEBUG"/>
+	  <logger name="jdbc.audit" level="OFF"/>
+	  <logger name="jdbc.resultset" level="OFF"/>
+	  <logger name="jdbc.resultsettable" level="DEBUG"/>
+	  <logger name="jdbc.connection" level="DEBUG"/>
+
+        <Root level="INFO">
+            <AppenderRef ref="Console"/>
+            <!-- <AppenderRef ref="File" /> -->
+        </Root>
+    </Loggers>
+</Configuration>
